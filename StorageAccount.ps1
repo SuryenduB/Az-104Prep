@@ -4,6 +4,8 @@ Connect-AzAccount -SubscriptionId $subscriptionId
 
 $ResourceGroupName = "Az104-Prep"
 $StorageAccountName = "az104acjjaskdasvda"
+$ContainerName = "test1"
+$ShareName = "testshare"
 $SkuName = "Standard_LRS"
 $Location = "WestEurope"
 
@@ -16,5 +18,11 @@ $resourceGroup = New-AzResourceGroup -Name $ResourceGroupName -Location $Locatio
 
 New-AzStorageAccount -Name $StorageAccountName -ResourceGroupName $ResourceGroup.ResourceGroupName -Location $Location -SkuName $SkuName 
 
+#Storage Context
 
+$Context = (Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $StorageAccountName).Context
 
+#Blob Container
+
+New-AzStorageContainer -Name $ContainerName -Context $Context
+New-AzStorageShare -Name $ShareName -Context $Context
